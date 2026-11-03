@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alicia Li (李思萱) | UI/UX Designer Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        rosebrand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(225, 29, 72, 0.4);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(225, 29, 72, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-rose-50/30 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans transition-colors duration-300 antialiased selection:bg-rosebrand-500 selection:text-white">
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-3 rounded-xl border border-slate-700 dark:border-slate-200 flex items-center space-x-3">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-rosebrand-500 text-lg"></i>
+        <span id="toast-message" class="font-medium text-sm">訊息已成功送出！</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-rose-100/80 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#hero" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rosebrand-600 to-pink-400 flex items-center justify-center text-white font-bold text-lg group-hover:scale-105 transition-transform overflow-hidden">
+                    <img src="https://img.ai365.fans/artworks/7283a21e-8f03-4e9b-a9d9-a74e413696f5/main.webp" alt="Alicia Li" class="w-full h-full object-cover" onerror="this.onerror=null; this.parentElement.innerHTML='AL';">
+                </div>
+                <div>
+                    <span class="font-bold text-lg tracking-tight block">Alicia Li</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="text-sm font-medium hover:text-rosebrand-600 dark:hover:text-rosebrand-400 transition-colors">關於我</a>
+                <a href="#projects" class="text-sm font-medium hover:text-rosebrand-600 dark:hover:text-rosebrand-400 transition-colors">精選作品</a>
+                <a href="#contact" class="text-sm font-medium hover:text-rosebrand-600 dark:hover:text-rosebrand-400 transition-colors">聯絡方式</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <!-- Music Toggle Button -->
+                <button id="music-toggle" aria-label="播放或暫停音樂" class="h-10 px-3.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center space-x-2" title="播放/暫停背景音樂">
+                    <i id="music-icon" class="fa-solid fa-music"></i>
+                    <span id="music-text" class="text-xs font-semibold hidden sm:inline">Music</span>
+                </button>
+
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" aria-label="切換深淺色模式" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+                </button>
+
+                <a href="#contact" class="hidden sm:inline-flex items-center justify-center px-4 h-10 rounded-xl bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-medium text-sm transition-all hover:-translate-y-0.5">
+                    聯絡我
+                </a>
+
+                <button id="mobile-menu-btn" aria-label="打開導覽選單" class="md:hidden w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-slate-900/95 border-b border-rose-100 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-rose-50 dark:hover:bg-slate-800 hover:text-rosebrand-600 transition-colors">關於我</a>
+            <a href="#projects" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-rose-50 dark:hover:bg-slate-800 hover:text-rosebrand-600 transition-colors">精選作品</a>
+            <a href="#contact" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-rose-50 dark:hover:bg-slate-800 hover:text-rosebrand-600 transition-colors">聯絡方式</a>
+        </div>
+
+        <!-- Audio Element -->
+        <audio id="bg-music" loop preload="auto">
+            <source src="https://img.ai365.fans/artworks/f7bef2e4-d96f-4cf9-9566-e74c23022b19/p0nb1wi78u.mp3" type="audio/mpeg">
+        </audio>
+    </header>
+
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section id="hero" class="relative min-h-[90vh] flex items-center justify-center py-16 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <!-- Text Content -->
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-rose-100 dark:bg-rose-950/80 text-rosebrand-700 dark:text-rosebrand-300 text-xs font-semibold uppercase tracking-wider border border-rose-200 dark:border-rose-900">
+                            <span class="w-2 h-2 rounded-full bg-rosebrand-500 animate-pulse"></span>
+                            <span>三年經驗 · UI/UX Designer</span>
+                        </div>
+                        
+                        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+                            Hello, I am <span class="bg-gradient-to-r from-rosebrand-600 to-pink-500 bg-clip-text text-transparent">Alicia Li</span>
+                        </h1>
+
+                        <p class="text-xl sm:text-2xl font-medium text-slate-700 dark:text-slate-300">
+                            擅長將 <span class="text-rosebrand-600 dark:text-rosebrand-400 font-semibold underline underline-offset-4">複雜流程</span> 轉化為 <span class="text-rosebrand-600 dark:text-rosebrand-400 font-semibold underline underline-offset-4">直覺體驗</span>
+                        </p>
+
+                        <p class="text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                            擁有涵蓋 B2B / B2B2C / B2C 跨平台 (Web, iOS, Android) 設計經驗。專長於建立 Design System、資訊架構梳理、可用性測試與跨團隊溝通，以極致的細節與設計邏輯驅動商業成長。
+                        </p>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                            <a href="#projects" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-semibold transition-all hover:-translate-y-0.5">
+                                <i class="fa-solid fa-layer-group mr-2"></i> 瀏覽設計作品
+                            </a>
+                            <a href="#contact" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl bg-white dark:bg-slate-900 hover:bg-rose-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold border border-slate-200 dark:border-slate-800 transition-all">
+                                <i class="fa-solid fa-envelope mr-2"></i> 聯絡資訊
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Profile Card Overlay -->
+                    <div class="lg:col-span-5 flex justify-center">
+                        <div class="relative w-56 sm:w-64">
+                            <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-rosebrand-500 to-pink-400 transform rotate-6 scale-105 opacity-20 blur-lg"></div>
+                            
+                            <div class="relative w-full rounded-3xl bg-[#efdede] dark:bg-slate-900 border-0 shadow-2xl overflow-hidden group flex items-center justify-center p-0">
+                                <img src="https://img.ai365.fans/artworks/f7bef2e4-d96f-4cf9-9566-e74c23022b19/24llwu2sl4x.png" alt="Alicia Li" class="w-full h-auto object-cover block group-hover:scale-105 transition-transform duration-500" onerror="this.onerror=null; this.src='https://img.ai365.fans/artworks/7283a21e-8f03-4e9b-a9d9-a74e413696f5/main.webp';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About & Core Skills Section -->
+        <section id="about" class="py-20 bg-white dark:bg-slate-900/60 border-t border-rose-100/60 dark:border-slate-800 transition-colors">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-semibold text-rosebrand-600 dark:text-rosebrand-400 uppercase tracking-widest mb-2">ABOUT & SKILLS</h2>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold tracking-tight">專業能力與核心優勢</h3>
+                </div>
+
+                <div class="grid grid-cols-1 min-[992px]:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                    <!-- Skill Card 1 -->
+                    <div class="p-8 rounded-2xl bg-rose-50/40 dark:bg-slate-900 border border-rose-100 dark:border-slate-800 hover:border-rosebrand-500/50 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-950/80 text-rosebrand-600 dark:text-rosebrand-400 flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-3">複雜系統流程與資訊架構</h4>
+                        <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
+                            專長於 B2B/B2B2C 雲端後台、POS 系統、點餐平台及會員系統的架構梳理，有效提升用戶的操作效率與降低學習成本。
+                        </p>
+                    </div>
+
+                    <!-- Skill Card 2 -->
+                    <div class="p-8 rounded-2xl bg-rose-50/40 dark:bg-slate-900 border border-rose-100 dark:border-slate-800 hover:border-rosebrand-500/50 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-950/80 text-rosebrand-600 dark:text-rosebrand-400 flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-cubes-stacked"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-3">Design System 建立與管理</h4>
+                        <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
+                            主導 Material Design & Apple HIG 規範，建立跨端 (Web, iOS, Android) UI 設計系統與規範，大幅強化視覺一致性與開發對接效率。
+                        </p>
+                    </div>
+
+                    <!-- Skill Card 3 -->
+                    <div class="p-8 rounded-2xl bg-rose-50/40 dark:bg-slate-900 border border-rose-100 dark:border-slate-800 hover:border-rosebrand-500/50 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-950/80 text-rosebrand-600 dark:text-rosebrand-400 flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-code-compare"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-3">設計交付與工程協作</h4>
+                        <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
+                            具備 HTML/CSS 基礎，能以工程思維溝通。建立高標準交付文件規範，確保非同步開發溝通下精準還原設計細節。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Selected Projects Section -->
+        <section id="projects" class="py-24 bg-rose-50/20 dark:bg-slate-950 border-t border-rose-100/60 dark:border-slate-800 transition-colors">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-semibold text-rosebrand-600 dark:text-rosebrand-400 uppercase tracking-widest mb-2">PORTFOLIO</h2>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold tracking-tight">精選設計專案</h3>
+                    <p class="mt-4 text-slate-600 dark:text-slate-400 text-base">涵蓋實體工作與獲獎 Side Projects 的優質專案</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Project 1 -->
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden hover:border-rosebrand-500/50 transition-all flex flex-col justify-between group">
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 bg-rose-100 dark:bg-rose-950 text-rosebrand-700 dark:text-rosebrand-300 text-xs font-semibold rounded-full">01 · Work Project</span>
+                                <span class="text-xs font-mono text-slate-400">Product Design</span>
+                            </div>
+                            <h4 class="text-2xl font-bold mb-3 group-hover:text-rosebrand-600 transition-colors">Ushow 雲端後台</h4>
+                            <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed mb-6">
+                                提供客戶建置前台 POS 系統資料的強大後台，涵蓋創建商品、設定套餐、制定促銷、管理進銷存等複雜流程，大幅提升操作邏輯與數據易讀性。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">B2B System</span>
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">資訊架構</span>
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">Redesign</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden hover:border-rosebrand-500/50 transition-all flex flex-col justify-between group">
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-semibold rounded-full">02 · AAPD 優秀專案</span>
+                                <span class="text-xs font-mono text-slate-400">App Design</span>
+                            </div>
+                            <h4 class="text-2xl font-bold mb-3 group-hover:text-rosebrand-600 transition-colors">MEELO 興趣社交 APP</h4>
+                            <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed mb-6">
+                                以興趣會友的創新社群交友 APP。負責 UI 設計、統整視覺一致性與 High-fidelity Prototype 製作，在 230 位學員中獲選為全營隊 2 名優秀專案之一。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">UI Design</span>
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">Prototype</span>
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">Side Project</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden hover:border-rosebrand-500/50 transition-all flex flex-col justify-between group">
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-full">03 · AAPD 挑戰賽銀獎</span>
+                                <span class="text-xs font-mono text-slate-400">App Redesign</span>
+                            </div>
+                            <h4 class="text-2xl font-bold mb-3 group-hover:text-rosebrand-600 transition-colors">BUS+ 交通規劃應用程式改版</h4>
+                            <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed mb-6">
+                                針對台灣知名交通規劃 APP 進行重新設計。主導 UXR 與 UXD，透過深度使用者研究解決痛點，提升使用者通勤路線規劃效率與滿意度。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">UX Research</span>
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">UX Design</span>
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">Silver Award</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 4 -->
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden hover:border-rosebrand-500/50 transition-all flex flex-col justify-between group">
+                        <div class="p-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-3 py-1 bg-rose-100 dark:bg-rose-950 text-rosebrand-700 dark:text-rosebrand-300 text-xs font-semibold rounded-full">04 · Work Project</span>
+                                <span class="text-xs font-mono text-slate-400">Web Design</span>
+                            </div>
+                            <h4 class="text-2xl font-bold mb-3 group-hover:text-rosebrand-600 transition-colors">Ushow 官方網站重構</h4>
+                            <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed mb-6">
+                                全面重新設計品牌形象網站，優化瀏覽體驗與轉化路徑。上線後使客戶訪問量顯著成長，並創下每月平均諮詢量增加 400% 的佳績。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">Web Redesign</span>
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">Conversion Rate</span>
+                                <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-md">Landing Page</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Experience Timeline -->
+        <section id="experience" class="py-24 bg-white dark:bg-slate-900/60 border-t border-rose-100/60 dark:border-slate-800 transition-colors">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-semibold text-rosebrand-600 dark:text-rosebrand-400 uppercase tracking-widest mb-2">EXPERIENCE</h2>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold tracking-tight">工作經歷與學歷</h3>
+                </div>
+
+                <div class="relative border-l-2 border-rosebrand-500/30 dark:border-rosebrand-500/20 ml-4 sm:ml-8 space-y-12">
+                    <!-- Experience 1 -->
+                    <div class="relative pl-8 sm:pl-10 group">
+                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rosebrand-600 border-4 border-white dark:border-slate-900 group-hover:scale-125 transition-transform"></div>
+                        <div class="bg-rose-50/40 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+                                <div>
+                                    <h4 class="text-xl font-bold text-slate-900 dark:text-white">UI Designer</h4>
+                                    <p class="text-rosebrand-600 dark:text-rosebrand-400 font-bold text-lg mt-1">Pilotfish</p>
+                                </div>
+                                <span class="inline-block mt-2 sm:mt-0 px-3 py-1 bg-rose-100 dark:bg-rose-950 text-rosebrand-700 dark:text-rosebrand-300 rounded-lg text-xs font-semibold self-start">
+                                    2025.10 - 2026.06
+                                </span>
+                            </div>
+                            <ul class="list-disc list-inside text-slate-600 dark:text-slate-400 text-base leading-relaxed space-y-2">
+                                <li>客製化 Icon 繪製與 UI 設計，服務客戶包含全球連鎖零售品牌與知名金融保險業者，顯著提升產品美感與操作易用性。</li>
+                                <li>協同 UX 研究人員執行產品盤點與可用性測試，將洞察精準轉化為介面優化方案。</li>
+                                <li>參與客戶提案會議，建立高標準交付文件規範，確保在非同步溝通下開發端能精準還原細節。</li>
+                                <li>主導內部分享 Material Design & Apple HIG 規範，升級團隊跨平台設計認知。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Experience 2 -->
+                    <div class="relative pl-8 sm:pl-10 group">
+                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rosebrand-600 border-4 border-white dark:border-slate-900 group-hover:scale-125 transition-transform"></div>
+                        <div class="bg-rose-50/40 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+                                <div>
+                                    <h4 class="text-xl font-bold text-slate-900 dark:text-white">UI/UX Designer</h4>
+                                    <p class="text-rosebrand-600 dark:text-rosebrand-400 font-bold text-lg mt-1">百揚資訊科技</p>
+                                </div>
+                                <span class="inline-block mt-2 sm:mt-0 px-3 py-1 bg-rose-100 dark:bg-rose-950 text-rosebrand-700 dark:text-rosebrand-300 rounded-lg text-xs font-semibold self-start">
+                                    2023.02 - 2025.09
+                                </span>
+                            </div>
+                            <ul class="list-disc list-inside text-slate-600 dark:text-slate-400 text-base leading-relaxed space-y-2">
+                                <li>重構公司官方形象網站，改版後每月平均諮詢量大幅成長 400%。</li>
+                                <li>重新設計大型 POS 後台系統，梳理極具挑戰的資訊架構與操作流程。</li>
+                                <li>開發 B2B POS 系統、B2B2C 線上點餐與會員集點平台，負責 Web / iOS / Android 多端維護。</li>
+                                <li>主導建立團隊 Design System，極大地強化產品一致性與開發協作效率。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Experience 3 -->
+                    <div class="relative pl-8 sm:pl-10 group">
+                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rosebrand-600 border-4 border-white dark:border-slate-900 group-hover:scale-125 transition-transform"></div>
+                        <div class="bg-rose-50/40 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+                                <div>
+                                    <h4 class="text-xl font-bold text-slate-900 dark:text-white">美術編輯</h4>
+                                    <p class="text-rosebrand-600 dark:text-rosebrand-400 font-bold text-lg mt-1">50年代博物館</p>
+                                </div>
+                                <span class="inline-block mt-2 sm:mt-0 px-3 py-1 bg-rose-100 dark:bg-rose-950 text-rosebrand-700 dark:text-rosebrand-300 rounded-lg text-xs font-semibold self-start">
+                                    2021.05 - 2021.07
+                                </span>
+                            </div>
+                            <ul class="list-disc list-inside text-slate-600 dark:text-slate-400 text-base leading-relaxed space-y-2">
+                                <li>負責短期展覽佈置之模擬設計圖規劃，以及執行出版書籍之排版設計，確保圖文資料以美觀且有趣的形式呈現。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Education Group -->
+                    <div class="relative pl-8 sm:pl-10 group">
+                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-rosebrand-600 border-4 border-white dark:border-slate-900 group-hover:scale-125 transition-transform"></div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+                            <h4 class="text-xl font-bold text-slate-900 dark:text-white flex items-center">
+                                <i class="fa-solid fa-graduation-cap text-rosebrand-600 dark:text-rosebrand-400 mr-2"></i> 學歷
+                            </h4>
+
+                            <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
+                                    <div>
+                                        <h5 class="font-bold text-slate-800 dark:text-slate-200 text-xl">Université Gustave Eiffel (法國)</h5>
+                                        <p class="text-base font-medium text-slate-500 dark:text-slate-400">Études visuelles, médias et arts numériques | 交換學生</p>
+                                    </div>
+                                    <span class="px-3 py-1 bg-rose-100 dark:bg-rose-950 text-rosebrand-700 dark:text-rosebrand-300 rounded-lg text-xs font-semibold self-start sm:self-auto">2021.09 - 2022.06</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
+                                    <div>
+                                        <h5 class="font-bold text-slate-800 dark:text-slate-200 text-xl">國立臺北教育大學</h5>
+                                        <p class="text-base font-medium text-slate-500 dark:text-slate-400">藝術與造形設計學系藝術組 | 學士</p>
+                                    </div>
+                                    <span class="px-3 py-1 bg-rose-100 dark:bg-rose-950 text-rosebrand-700 dark:text-rosebrand-300 rounded-lg text-xs font-semibold self-start sm:self-auto">2016.09 - 2022.06</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Awards & Certifications Section -->
+        <section class="py-20 bg-rose-50/20 dark:bg-slate-950 border-t border-rose-100/60 dark:border-slate-800 transition-colors">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-semibold text-rosebrand-600 dark:text-rosebrand-400 uppercase tracking-widest mb-2">HONORS & CERTIFICATES</h2>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold tracking-tight">榮譽專案與專業認證</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Award 1 -->
+                    <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 relative overflow-hidden group">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <span class="text-xs font-mono text-amber-600 font-bold block mb-1">2025.06 - 2025.08</span>
+                        <h4 class="text-xl font-bold mb-3">AAPD UI設計線上實戰營優秀專案</h4>
+                        <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed mb-4">
+                            為創新交友 APP MEELO 做概念設計，負責 UI 設計與 Prototype。每週皆獲選「優秀作業」，從 230 位學員中脫穎而出獲選全營隊 2 名優秀學員之一。
+                        </p>
+                    </div>
+
+                    <!-- Award 2 -->
+                    <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 relative overflow-hidden group">
+                        <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-medal"></i>
+                        </div>
+                        <span class="text-xs font-mono text-slate-500 font-bold block mb-1">2023.10 - 2023.12</span>
+                        <h4 class="text-xl font-bold mb-3">AAPD 產品設計挑戰賽銀獎</h4>
+                        <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed mb-4">
+                            為台灣知名交通規劃應用程式 BUS+ 進行重新設計。負責 UXR 與 UXD，透過完整使用者研究流程成功解決產品痛點。
+                        </p>
+                    </div>
+
+                    <!-- Certification -->
+                    <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 relative overflow-hidden group">
+                        <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rosebrand-600 flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-certificate"></i>
+                        </div>
+                        <span class="text-xs font-mono text-rosebrand-600 font-bold block mb-1">PROFESSIONAL CERTIFICATE</span>
+                        <h4 class="text-xl font-bold mb-3">Google UX Design Professional Certificate</h4>
+                        <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed mb-4">
+                            具備完整國際級 UX 設計思考流程，涵蓋 Wireframing, Prototyping, Usability Testing 與 Accessibility 設計標準。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-24 bg-white dark:bg-slate-900/60 border-t border-rose-100/60 dark:border-slate-800 transition-colors">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-semibold text-rosebrand-600 dark:text-rosebrand-400 uppercase tracking-widest mb-2">TESTIMONIALS</h2>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold tracking-tight">合作夥伴評價</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Review 1 -->
+                    <div class="p-8 rounded-3xl bg-rose-50/30 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 relative flex flex-col justify-between">
+                        <div class="mb-6">
+                            <i class="fa-solid fa-quote-left text-3xl text-rosebrand-600 dark:text-rosebrand-400 mb-4 block"></i>
+                            <p class="text-slate-700 dark:text-slate-300 text-base leading-relaxed italic">
+                                「在設計過程中，Alicia 不會只流於表面，她會深入思考產品的 Accessibility 是否顧及所有客群，也能清楚呈現視覺化數據，讓其他團隊成員理解。性格上我很佩服 Alicia 的行動力！她不但主動組建 Lucky Star 團隊，也在團隊合作中積極引導討論、樂於分享知識。與她共事令人很放心，像是有一位可靠的夥伴在身後支撐！」
+                            </p>
+                        </div>
+                        <div class="flex items-center space-x-3 pt-4 border-t border-slate-200/60 dark:border-slate-800">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 dark:bg-slate-800 flex items-center justify-center text-xl">
+                                👩‍🎨
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-sm">Zozoi</h5>
+                                <p class="text-xs text-slate-500">UI Designer @ AAPD 產品設計挑戰賽</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="p-8 rounded-3xl bg-rose-50/30 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 relative flex flex-col justify-between">
+                        <div class="mb-6">
+                            <i class="fa-solid fa-quote-left text-3xl text-rosebrand-600 dark:text-rosebrand-400 mb-4 block"></i>
+                            <p class="text-slate-700 dark:text-slate-300 text-base leading-relaxed italic">
+                                「我有幸與 Alicia 合作開發產品，她是一位極具專業素養的 UI/UX 設計師。在合作過程中，Alicia 總是能夠迅速理解需求，提出具體且具有用戶導向的設計方案，並在設計與技術之間找到完美的平衡。她的設計邏輯非常清晰，讓我在開發端能夠無縫接軌，極大地提升了專案效率。」
+                            </p>
+                        </div>
+                        <div class="flex items-center space-x-3 pt-4 border-t border-slate-200/60 dark:border-slate-800">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 dark:bg-slate-800 flex items-center justify-center text-xl">
+                                👨‍💻
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-sm">Aaron</h5>
+                                <p class="text-xs text-slate-500">iOS Engineer @ 百揚資訊科技</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div class="p-8 rounded-3xl bg-rose-50/30 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 relative flex flex-col justify-between">
+                        <div class="mb-6">
+                            <i class="fa-solid fa-quote-left text-3xl text-rosebrand-600 dark:text-rosebrand-400 mb-4 block"></i>
+                            <p class="text-slate-700 dark:text-slate-300 text-base leading-relaxed italic">
+                                「Alicia 在 UI 專業上展現了精巧的設計能力，能夠察覺視覺上的細節差別並提供調整方案，帶領專案的 UI 更趨成熟。我很欣賞 Alicia 真誠的態度，能夠為了專案全力付出、多次主動提出優化想法，是一位成熟且專業的合作夥伴。」
+                            </p>
+                        </div>
+                        <div class="flex items-center space-x-3 pt-4 border-t border-slate-200/60 dark:border-slate-800">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 dark:bg-slate-800 flex items-center justify-center text-xl">
+                                👩‍💼
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-sm">Wen Weng</h5>
+                                <p class="text-xs text-slate-500">PM & UX Designer @ AAPD 產品設計挑戰賽</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 4 -->
+                    <div class="p-8 rounded-3xl bg-rose-50/30 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 relative flex flex-col justify-between">
+                        <div class="mb-6">
+                            <i class="fa-solid fa-quote-left text-3xl text-rosebrand-600 dark:text-rosebrand-400 mb-4 block"></i>
+                            <p class="text-slate-700 dark:text-slate-300 text-base leading-relaxed italic">
+                                「在與 Alicia 合作時，總讓人感到非常安心。她是一位主動分享想法的設計師，並且總能清晰地了解使用者客群的體驗與脈絡，提出強而有力的建言。她負責的 UX 設計工作也展現了出色的邏輯性與亮眼的成果。」
+                            </p>
+                        </div>
+                        <div class="flex items-center space-x-3 pt-4 border-t border-slate-200/60 dark:border-slate-800">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 dark:bg-slate-800 flex items-center justify-center text-xl">
+                                👨‍🎨
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-sm">Rory</h5>
+                                <p class="text-xs text-slate-500">UI Designer @ AAPD 產品設計挑戰賽</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 bg-rose-50/50 dark:bg-slate-950 border-t border-rose-100/60 dark:border-slate-800 transition-colors">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-5 space-y-6">
+                        <span class="text-xs font-semibold text-rosebrand-600 dark:text-rosebrand-400 uppercase tracking-widest block">GET IN TOUCH</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">攜手打造優秀的數位產品體驗</h2>
+                        <p class="text-slate-600 dark:text-slate-400 text-base leading-relaxed">
+                            不論您是需要系統 UI/UX 設計、體驗流程重構，或是團隊協作諮詢，非常歡迎與我聯繫！
+                        </p>
+
+                        <div class="space-y-4 pt-4">
+                            <a href="mailto:s09950017@gmail.com" class="flex items-center space-x-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-rosebrand-500 transition-all group">
+                                <div class="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-950 text-rosebrand-600 dark:text-rosebrand-400 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-slate-400 block font-medium">Email Me</span>
+                                    <span class="text-slate-800 dark:text-slate-200 font-bold">s09950017@gmail.com</span>
+                                </div>
+                            </a>
+
+                            <a href="https://www.linkedin.com/in/alicia-li-ab87b725a" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-rosebrand-500 transition-all group">
+                                <div class="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-950 text-rosebrand-600 dark:text-rosebrand-400 flex items-center justify-center text-xl">
+                                    <i class="fa-brands fa-linkedin"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-slate-400 block font-medium">Connect on LinkedIn</span>
+                                    <span class="text-slate-800 dark:text-slate-200 font-bold">www.linkedin.com/in/alicia-li-ab87b725a</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="lg:col-span-7">
+                        <form id="contact-form" class="p-8 sm:p-10 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-6">
+                            <h3 class="text-xl font-bold mb-4">發送訊息給 Alicia</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="name" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">您的姓名</label>
+                                    <input type="text" id="name" required placeholder="Name" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:border-rosebrand-500 transition-colors text-sm">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">電子信箱</label>
+                                    <input type="email" id="email" required placeholder="name@company.com" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:border-rosebrand-500 transition-colors text-sm">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">訊息內容</label>
+                                <textarea id="message" rows="4" required placeholder="想與我聊聊合作方向，或關於設計的需求..." class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:border-rosebrand-500 transition-colors text-sm resize-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-4 rounded-xl bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-semibold text-sm transition-all">
+                                發送訊息 <i class="fa-solid fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <div class="flex justify-center items-center space-x-4">
+                <a href="https://www.linkedin.com/in/alicia-li-ab87b725a" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-rose-100 dark:hover:bg-slate-700 hover:text-rosebrand-600 transition-colors flex items-center justify-center">
+                    <i class="fa-brands fa-linkedin text-xl"></i>
+                </a>
+                <a href="mailto:s09950017@gmail.com" aria-label="Email" class="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-rose-100 dark:hover:bg-slate-700 hover:text-rosebrand-600 transition-colors flex items-center justify-center">
+                    <i class="fa-solid fa-envelope text-xl"></i>
+                </a>
+            </div>
+            <p class="text-xs text-slate-500">© 2026 Alicia Li. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Theme Toggle Functionality
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', function() {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // Initialize Theme from localStorage
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            // Close menu on click links
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        // Background Music Toggle
+        const musicToggle = document.getElementById('music-toggle');
+        const bgMusic = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        const musicText = document.getElementById('music-text');
+        let isPlaying = false;
+
+        if (musicToggle && bgMusic) {
+            musicToggle.addEventListener('click', () => {
+                if (isPlaying) {
+                    bgMusic.pause();
+                    isPlaying = false;
+                    musicIcon.className = 'fa-solid fa-music';
+                    if (musicText) musicText.textContent = 'Music';
+                } else {
+                    bgMusic.play().then(() => {
+                        isPlaying = true;
+                        musicIcon.className = 'fa-solid fa-volume-high animate-bounce';
+                        if (musicText) musicText.textContent = 'Playing';
+                    }).catch(e => {
+                        console.log("Audio play blocked or error:", e);
+                    });
+                }
+            });
+        }
+
+        // Google Apps Script Form Submission
+        const contactForm = document.getElementById('contact-form');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '發送中... <i class="fa-solid fa-spinner animate-spin ml-2"></i>';
+
+                const nameVal = document.getElementById('name').value;
+                const emailVal = document.getElementById('email').value;
+                const messageVal = document.getElementById('message').value;
+
+                // Verified Google Apps Script Web App Endpoint
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbz5pwj_NdUNwOvlc7A9HeDgnC_dUcVYP2ZQ_HM9WOuIYBVRf-iDZwy796mhbksb98gR7w/exec';
+
+                try {
+                    // Using JSON payload with text/plain to bypass CORS preflight restrictions while allowing Apps Script e.postData to parse it
+                    const payload = {
+                        name: nameVal,
+                        email: emailVal,
+                        message: messageVal
+                    };
+
+                    await fetch(scriptURL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'text/plain;charset=utf-8',
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    // Show success toast
+                    toastMessage.textContent = '訊息已成功送出！感謝您的聯繫。';
+                    toast.classList.remove('translate-y-32', 'opacity-0');
+                    toast.classList.add('translate-y-0', 'opacity-100');
+
+                    contactForm.reset();
+
+                    setTimeout(() => {
+                        toast.classList.remove('translate-y-0', 'opacity-100');
+                        toast.classList.add('translate-y-32', 'opacity-0');
+                    }, 4000);
+
+                } catch (error) {
+                    console.error('Error!', error);
+                    toastMessage.textContent = '發送失敗，請稍後再試或直接寄信給我。';
+                    toast.classList.remove('translate-y-32', 'opacity-0');
+                    toast.classList.add('translate-y-0', 'opacity-100');
+
+                    setTimeout(() => {
+                        toast.classList.remove('translate-y-0', 'opacity-100');
+                        toast.classList.add('translate-y-32', 'opacity-0');
+                    }, 4000);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
